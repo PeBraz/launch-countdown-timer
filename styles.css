@@ -1,0 +1,211 @@
+:root {
+  --font-size: 14px;
+  --font-family: 'Red Hat Text', sans-serif;
+
+  --color-gray-blue: hsl(237, 18%, 59%);
+  --color-soft-red: hsl(345, 95%, 68%);
+  --color-white: hsl(0, 0%, 100%);
+  --color-dark-desat-blue: hsl(236, 21%, 26%);
+  --color-dark-blue: hsl(235, 16%, 14%);
+  --color-black: hsl(234, 17%, 12%);
+
+  --elevation-01:  0px 3px 0px 0px rgba(0,0,0,0.75);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+
+  background-image: url('./images/bg-stars.svg');
+  background-color: var(--color-dark-blue);
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  font-size: 22px;
+  margin-bottom: 40px;
+}
+
+.attribution {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+}
+
+.footer {
+  background-image: url('./images/pattern-hills.svg');
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-x: 81%;
+  background-position-y: bottom;
+  flex: 0 1 197px;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  padding-top: 60px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+}
+
+.footer__button {
+  color: var(--color-gray-blue);
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin: 16px; 
+}
+
+.footer__button:hover {
+  color: var(--color-soft-red);
+  cursor: pointer;
+}
+
+.timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer__section {
+  margin: 0.4em;
+}
+
+.timer__card {
+  --card-size: 70px;
+  --hole-size: 6px;
+  --hole-radius: calc(var(--hole-size) / 2);
+  background-color: var(--color-dark-blue);
+  height: var(--card-size);
+  width: var(--card-size);
+  line-height: var(--card-size);
+  margin-bottom: 10px;
+  position: relative;
+  font-size: 36px;
+  color: var(--color-soft-red);
+  overflow-x: hidden;
+
+  border-radius: 4px;
+  box-shadow: var(--elevation-01);
+  -webkit-box-shadow: var(--elevation-01);
+  -moz-box-shadow: var(--elevation-01);
+}
+
+.timer__card-top {
+  content: '';
+  top: 0;
+  left: 0;
+  height: 50%;
+  width: 100%;
+  position: absolute;
+  background: var(--color-dark-desat-blue);
+  border-radius: 4px;
+  filter: brightness(80%);
+  overflow: hidden;
+
+  transform: rotate3d(-1, 0, 0, 0deg);
+  transform-origin: bottom;
+  transition: transform 0.5s ease-in-out;
+}
+
+.timer__card-top--animated {
+  transform: rotate3d(-1, 0, 0, 90deg);
+}
+
+.timer__card-bottom {
+  content: '';
+  top: 50%;
+  left: 0;
+  height: 50%;
+  width: 100%;
+  position: absolute;
+  background:var(--color-dark-desat-blue);
+  border-radius: 4px;
+  overflow: hidden;
+
+  transform: rotate3d(-1, 0, 0, 0deg);
+  transform-origin: top;
+  transition: transform 0.5s ease-in-out;
+  transition-delay: 0.5s;
+}
+
+.timer__card-bottom--animated {
+  transform: rotate3d(-1, 0, 0, 90deg);
+}
+
+.timer__card::before {
+  content: '';
+  position: absolute;
+  top: calc(50% - var(--hole-radius));
+  left: calc(-1 * var(--hole-radius));
+  background: var(--color-black);
+  width: var(--hole-size);
+  height: var(--hole-size);
+  z-index: 1;
+  border-radius: 50%;
+}
+
+.timer__card::after {
+  content: '';
+  position: absolute;
+  top: calc(50% - var(--hole-radius));
+  right: calc(-1 * var(--hole-radius));
+  background: var(--color-black);
+  width: var(--hole-size);
+  height: var(--hole-size);
+  z-index: 1;
+  border-radius: 50%;
+}
+
+
+.timer__card-top-digits {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.timer__card-bottom-digits {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.timer__legend {
+  color: var(--color-gray-blue);
+  text-transform: uppercase;
+  font-size: 0.6em;
+  letter-spacing: 3px;
+}
+
+@media only screen and (min-width: 760px) {
+  body {
+    --font-size: 18px;
+  }
+
+  .timer__card {
+    --card-size: 140px;
+    font-size: 72px;
+  }
+}
