@@ -10,12 +10,15 @@ const renderCard = (cardClassName, { time, prevTime }) => {
     throw new Error(`Invalid card class: ${cardClassName}`);
   }
 
-  const clock = `
+  const topCard = `
     <div class="timer__card-top">
       <div class="timer__card-top-digits">
-        ${String(prevTime || time).padStart(2, 0)}
+        ${String(time).padStart(2, 0)}
       </div>
     </div>
+  `;
+
+  const bottomCard = `
     <div class="timer__card-bottom">
       <div class="timer__card-bottom-digits">
         ${String(prevTime || time).padStart(2, 0)}
@@ -23,36 +26,37 @@ const renderCard = (cardClassName, { time, prevTime }) => {
     </div>
   `;
 
+
   if (!prevTime) {
-    render(cardClassName, clock);
+    render(cardClassName, `${topCard}${bottomCard}`);
     return;
   }
 
-  render(
-    cardClassName,
-    `
-    <div class="timer__card-top">
+  const animatedTopCard = `
+    <div class="timer__card-top animated">
       <div class="timer__card-top-digits">
-        ${String(time).padStart(2, 0)}
+        ${String(prevTime || time).padStart(2, 0)}
       </div>
     </div>
-    ${clock}
-    <div class="timer__card-bottom timer__card-bottom--animated">
+  `;
+
+  const animatedBottomCard = `
+    <div class="timer__card-bottom animated">
       <div class="timer__card-bottom-digits">
         ${String(time).padStart(2, 0)}
       </div>
     </div>
-  `
-  );
+  `;
 
-  setTimeout(() => {
-    $(`${cardClassName} .timer__card-top`)[1].classList.add(
-      "timer__card-top--animated"
-    );
-    $(`${cardClassName} .timer__card-bottom`)[1].classList.remove(
-      "timer__card-bottom--animated"
-    );
-  }, 10);
+  render(
+    cardClassName,
+    `
+    ${topCard}
+    ${animatedTopCard}
+    ${bottomCard}
+    ${animatedBottomCard}
+    `
+  );
 };
 
 const renderClock = (prevTime, { days, hours, minutes, seconds }) => {
@@ -71,6 +75,13 @@ const renderClock = (prevTime, { days, hours, minutes, seconds }) => {
   if (prevTime.seconds !== seconds) {
     renderCard(".timer__second", { prevTime: prevTime.seconds, time: seconds });
   }
+};
+
+const renderTest = (_, { days }) => {
+  renderCard(".timer__day", { prevTime: days - 1, time: days });
+  renderCard(".timer__hour", { prevTime: days - 1, time: days });
+  renderCard(".timer__minute", { prevTime: days - 1, time: days });
+  renderCard(".timer__second", { prevTime: days - 1, time: days });
 };
 
 function countdown(days) {

@@ -10,6 +10,8 @@
   --color-black: hsl(234, 17%, 12%);
 
   --elevation-01:  0px 3px 0px 0px rgba(0,0,0,0.75);
+
+  --card-speed: 0.4s;
 }
 
 * {
@@ -114,7 +116,6 @@ main {
 }
 
 .timer__card-top {
-  content: '';
   top: 0;
   left: 0;
   height: 50%;
@@ -125,17 +126,15 @@ main {
   filter: brightness(80%);
   overflow: hidden;
 
-  transform: rotate3d(-1, 0, 0, 0deg);
   transform-origin: bottom;
-  transition: transform 0.5s ease-in-out;
 }
 
-.timer__card-top--animated {
-  transform: rotate3d(-1, 0, 0, 90deg);
+.timer__card-top.animated {
+  -webkit-animation: rotateOutCard var(--card-speed) forwards;
+  animation: rotateOutCard var(--card-speed) forwards;
 }
 
 .timer__card-bottom {
-  content: '';
   top: 50%;
   left: 0;
   height: 50%;
@@ -145,15 +144,15 @@ main {
   border-radius: 4px;
   overflow: hidden;
 
-  transform: rotate3d(-1, 0, 0, 0deg);
   transform-origin: top;
-  transition: transform 0.5s ease-in-out;
-  transition-delay: 0.5s;
 }
 
-.timer__card-bottom--animated {
+.timer__card-bottom.animated {
   transform: rotate3d(-1, 0, 0, 90deg);
+  -webkit-animation: rotateInCard var(--card-speed) forwards var(--card-speed);
+  animation: rotateInCard var(--card-speed) forwards var(--card-speed);
 }
+
 
 .timer__card::before {
   content: '';
@@ -207,5 +206,41 @@ main {
   .timer__card {
     --card-size: 140px;
     font-size: 72px;
+  }
+}
+
+@keyframes rotateInCard {
+  0% {
+    transform: rotate3d(-1, 0, 0, 90deg);
+  }
+  100% {
+    transform: rotate3d(-1, 0, 0, 0deg);
+  }
+}
+
+@-webkit-keyframes rotateInCard {
+  0% {
+    transform: rotate3d(-1, 0, 0, 90deg);
+  }
+  100% {
+    transform: rotate3d(-1, 0, 0, 0deg);
+  }
+}
+
+@keyframes rotateOutCard {
+  0% {
+    transform: rotate3d(-1, 0, 0, 0deg);
+  }
+  100% {
+    transform: rotate3d(-1, 0, 0, 90deg);
+  }
+}
+
+@-webkit-keyframes rotateOutCard {
+  0% {
+    transform: rotate3d(-1, 0, 0, 0deg);
+  }
+  100% {
+    transform: rotate3d(-1, 0, 0, 90deg);
   }
 }
